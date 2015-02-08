@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function usage
+{
+  echo "usage: start_sanity_tester [[[-p port ] [-d directory]] | [-h]]"
+}
+
+directory=
+port=
+
+
+while [ "$1" != "" ]; do
+  case $1 in
+    -d | --directory )      shift
+                            directory=$1
+                            ;;
+    -p | --port )           shift
+                            port=$1
+                            ;;
+    -h | --help )           usage
+                            exit
+                            ;;
+    * )                     usage
+                            exit 1
+  esac
+  shift
+done
+
+DIRECTORY=$directory ruby "${BASH_SOURCE%/*}/sanity_tester.rb" -p $port
